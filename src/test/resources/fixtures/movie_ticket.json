@@ -1,0 +1,8 @@
+{
+  "ticketType": "ADULT",
+  "quantity": 1,
+  "totalCost": {
+    "amount": "25.00",
+    "currency": "AUD"
+  }
+}

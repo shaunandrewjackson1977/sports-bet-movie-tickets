@@ -1,0 +1,25 @@
+{
+  "transactionId": 1,
+  "tickets": [
+    {
+      "ticketType": "ADULT",
+      "quantity": 1,
+      "totalCost": {
+        "amount": "25.00",
+        "currency": "AUD"
+      }
+    },
+    {
+      "ticketType": "CHILDREN",
+      "quantity": 1,
+      "totalCost": {
+        "amount": "5.00",
+        "currency": "AUD"
+      }
+    }
+  ],
+  "totalCost": {
+    "amount": "30.00",
+    "currency": "AUD"
+  }
+}
