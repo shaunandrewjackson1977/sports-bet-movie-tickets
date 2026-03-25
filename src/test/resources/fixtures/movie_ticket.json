@@ -1,5 +1,5 @@
 {
-  "ticketType": "ADULT",
+  "ticketType": "Adult",
   "quantity": 1,
   "totalCost": {
     "amount": "25.00",

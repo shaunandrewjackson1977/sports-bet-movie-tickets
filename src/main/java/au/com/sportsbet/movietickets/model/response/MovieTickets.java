@@ -1,7 +1,7 @@
 package au.com.sportsbet.movietickets.model.response;
 
 import javax.money.MonetaryAmount;
-import java.util.Set;
+import java.util.List;
 
-public record MovieTickets(Long transactionId, Set<MovieTicket> tickets, MonetaryAmount totalCost) {
+public record MovieTickets(long transactionId, List<MovieTicket> tickets, MonetaryAmount totalCost) {
 }

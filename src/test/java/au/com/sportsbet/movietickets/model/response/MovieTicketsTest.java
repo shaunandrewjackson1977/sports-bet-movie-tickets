@@ -21,7 +21,7 @@ class MovieTicketsTest extends JsonSerializationTest {
     public void shouldSerializeToJson() throws Exception {
         var expectedJson = readFixtureFile(defaultFixtureFile());
         var actualJson = serializeJavaToJsonString(movieTickets);
-        assertEquals(expectedJson, actualJson, false);
+        assertEquals(expectedJson, actualJson, true);
     }
 
     @Test

@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class JacksonConfig {
-
     @JacksonComponent(type = MonetaryAmount.class)
     static class MonetaryAmountSerializer extends ObjectValueSerializer<MonetaryAmount> {
         @Override

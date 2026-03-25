@@ -1,5 +1,5 @@
 {
-  "transactionId": 1,
+  "transactionId": 2,
   "tickets": [
     {
       "ticketType": "Adult",
@@ -11,15 +11,23 @@
     },
     {
       "ticketType": "Children",
+      "quantity": 3,
+      "totalCost": {
+        "amount": "11.25",
+        "currency": "AUD"
+      }
+    },
+    {
+      "ticketType": "Teen",
       "quantity": 1,
       "totalCost": {
-        "amount": "5.00",
+        "amount": "12.00",
         "currency": "AUD"
       }
     }
   ],
   "totalCost": {
-    "amount": "30.00",
+    "amount": "48.25",
     "currency": "AUD"
   }
 }

@@ -8,7 +8,6 @@ import au.com.sportsbet.movietickets.model.response.TicketType;
 
 import javax.money.MonetaryAmount;
 import java.util.List;
-import java.util.Set;
 
 import static au.com.sportsbet.movietickets.MonetaryAmountHelper.audMonetaryAmount;
 
@@ -16,6 +15,10 @@ public class ModelFixturesHelper {
     // request model helpers
     public static Customer newCustomer() {
         return newCustomer("Joe Smith", 30);
+    }
+
+    public static Customer newCustomer(int age) {
+        return newCustomer("Joe Smith", age);
     }
 
     public static Customer newCustomer(String name, int age) {
@@ -46,7 +49,7 @@ public class ModelFixturesHelper {
     public static MovieTickets newMovieTickets() {
         return newMovieTickets(
                 1L,
-                Set.of(
+                List.of(
                         new MovieTicket(
                                 TicketType.ADULT,
                                 1,
@@ -61,7 +64,7 @@ public class ModelFixturesHelper {
                 audMonetaryAmount(30));
     }
 
-    public static MovieTickets newMovieTickets(long transactionId, Set<MovieTicket> tickets, MonetaryAmount totalCost) {
+    public static MovieTickets newMovieTickets(long transactionId, List<MovieTicket> tickets, MonetaryAmount totalCost) {
         return new MovieTickets(transactionId, tickets, totalCost);
     }
 }
