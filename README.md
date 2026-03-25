@@ -4,7 +4,14 @@ A REST API that calculates movie ticket pricing from customer transaction data.
 
 ## Prerequisites
 
-- Java 25+
+- Java 25+ (tested with **Eclipse Temurin 25.0.2**)
+
+If you use [sdkman](https://sdkman.io/), you can install and activate the required JDK with:
+
+```bash
+sdk install java 25.0.2-tem
+sdk use java 25.0.2-tem
+```
 
 ## Running Locally
 
