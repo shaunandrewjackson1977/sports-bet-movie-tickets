@@ -153,31 +153,31 @@ The application follows a standard layered architecture with strict separation o
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                    HTTP Client                       │
-└─────────────────────┬───────────────────────────────┘
-                      │ POST /api/v1/tickets
-┌─────────────────────▼───────────────────────────────┐
-│              Controller Layer                        │
-│         MovieTicketsController                       │
-│  • Accepts and validates the incoming request        │
-│  • Delegates to the service layer                    │
-│  • Returns HTTP 200 with the response body           │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│               Service Layer                          │
-│           MovieTicketsService                        │
-│  • Resolves each customer's age to a ticket type     │
-│  • Calculates costs and applies discounts            │
-│  • Builds and returns the MovieTickets response      │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│               Model Layer                            │
-│   request/MovieTransaction  request/Customer         │
-│   response/MovieTickets     response/MovieTicket     │
-│   response/TicketType       service/Range            │
-│   service/TicketTypeSummary                          │
+│                     HTTP Client                     │
+└──────────────────────────┬──────────────────────────┘
+                           │ POST /api/v1/tickets
+┌──────────────────────────▼──────────────────────────┐
+│                  Controller Layer                   │
+│               MovieTicketsController                │
+│  • Accepts and validates the incoming request       │
+│  • Delegates to the service layer                   │
+│  • Returns HTTP 200 with the response body          │
+└──────────────────────────┬──────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────┐
+│                    Service Layer                    │
+│                 MovieTicketsService                 │
+│  • Resolves each customer's age to a ticket type    │
+│  • Calculates costs and applies discounts           │
+│  • Builds and returns the MovieTickets response     │
+└──────────────────────────┬──────────────────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────┐
+│                     Model Layer                     │
+│   request/MovieTransaction  request/Customer        │
+│   response/MovieTickets     response/MovieTicket    │
+│   response/TicketType       service/Range           │
+│   service/TicketTypeSummary                         │
 └─────────────────────────────────────────────────────┘
 ```
 
