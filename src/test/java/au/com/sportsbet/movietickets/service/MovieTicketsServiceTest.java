@@ -1,5 +1,6 @@
 package au.com.sportsbet.movietickets.service;
 
+import au.com.sportsbet.movietickets.config.MovieTicketsProperties;
 import au.com.sportsbet.movietickets.model.request.MovieTransaction;
 import au.com.sportsbet.movietickets.model.response.MovieTicket;
 import au.com.sportsbet.movietickets.model.response.MovieTickets;
@@ -12,7 +13,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static au.com.sportsbet.movietickets.ModelFixturesHelper.newCustomer;
@@ -21,7 +24,26 @@ import static au.com.sportsbet.movietickets.ModelFixturesHelper.newMovieTransact
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MovieTicketsServiceTest {
-    private final MovieTicketsService movieTicketsService = new MovieTicketsService();
+    private static final MovieTicketsProperties TEST_PROPERTIES = new MovieTicketsProperties(
+        new MovieTicketsProperties.Pricing(
+            3,
+            0.75,
+            List.of(
+                new MovieTicketsProperties.AgeRange(1, 10, TicketType.CHILDREN),
+                new MovieTicketsProperties.AgeRange(11, 17, TicketType.TEEN),
+                new MovieTicketsProperties.AgeRange(18, 64, TicketType.ADULT),
+                new MovieTicketsProperties.AgeRange(65, 100, TicketType.SENIOR)
+            ),
+            Map.of(
+                TicketType.CHILDREN, new MovieTicketsProperties.Price(new BigDecimal("5"), "AUD"),
+                TicketType.TEEN,     new MovieTicketsProperties.Price(new BigDecimal("12"), "AUD"),
+                TicketType.ADULT,    new MovieTicketsProperties.Price(new BigDecimal("25"), "AUD"),
+                TicketType.SENIOR,   new MovieTicketsProperties.Price(new BigDecimal("17.5"), "AUD")
+            )
+        )
+    );
+
+    private final MovieTicketsService movieTicketsService = new MovieTicketsService(TEST_PROPERTIES);
 
     /*
      * Unlikely scenario tests but these focus on how the service functions when there are no customers

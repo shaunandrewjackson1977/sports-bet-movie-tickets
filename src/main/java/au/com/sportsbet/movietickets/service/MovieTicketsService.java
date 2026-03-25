@@ -1,5 +1,6 @@
 package au.com.sportsbet.movietickets.service;
 
+import au.com.sportsbet.movietickets.config.MovieTicketsProperties;
 import au.com.sportsbet.movietickets.model.request.MovieTransaction;
 import au.com.sportsbet.movietickets.model.response.MovieTicket;
 import au.com.sportsbet.movietickets.model.response.MovieTickets;
@@ -21,24 +22,23 @@ import java.util.stream.Collectors;
 public class MovieTicketsService {
     private static final Logger logger = LoggerFactory.getLogger(MovieTicketsService.class);
 
-    private static final int CHILDREN_GROUP_DISCOUNT_THRESHOLD = 3;
-    private static final double CHILDREN_GROUP_DISCOUNT_RATE = 0.75d;
+    private final Map<Range, TicketType> ticketTypes;
+    private final Map<TicketType, MonetaryAmount> ticketPrices;
+    private final int childrenGroupDiscountThreshold;
+    private final double childrenGroupDiscountRate;
 
-    private static final Map<Range, TicketType> ticketTypes = new LinkedHashMap<>(
-            Map.of(
-                new Range(1, 10), TicketType.CHILDREN,
-                new Range(11, 17), TicketType.TEEN,
-                new Range(18, 64), TicketType.ADULT,
-                new Range(65, 100), TicketType.SENIOR
-            )
-    );
-
-    private static final Map<TicketType, MonetaryAmount> ticketPrices = Map.of(
-            TicketType.CHILDREN, Money.of(5, "AUD"),
-            TicketType.TEEN, Money.of(12, "AUD"),
-            TicketType.ADULT, Money.of(25, "AUD"),
-            TicketType.SENIOR, Money.of(17.5d, "AUD")
-    );
+    public MovieTicketsService(MovieTicketsProperties props) {
+        var pricing = props.pricing();
+        this.childrenGroupDiscountThreshold = pricing.childrenGroupDiscountThreshold();
+        this.childrenGroupDiscountRate = pricing.childrenGroupDiscountRate();
+        this.ticketTypes = new LinkedHashMap<>();
+        pricing.ageRanges().forEach(r -> ticketTypes.put(new Range(r.min(), r.max()), r.ticketType()));
+        this.ticketPrices = pricing.ticketPrices().entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> Money.of(e.getValue().amount(), e.getValue().currency())
+                ));
+    }
 
     public MovieTickets generateTickets(MovieTransaction movieTransaction) {
         logger.debug("Processing transaction id={} with {} customer(s)",
@@ -81,9 +81,9 @@ public class MovieTicketsService {
     }
 
     private TicketTypeSummary applyChildrenGroupDiscount(TicketTypeSummary existing, long transactionId) {
-        if (existing.quantity() >= CHILDREN_GROUP_DISCOUNT_THRESHOLD) {
+        if (existing.quantity() >= childrenGroupDiscountThreshold) {
             logger.debug("Applying group discount to children's tickets for transaction id={}", transactionId);
-            return new TicketTypeSummary(existing.quantity(), existing.totalCost().multiply(CHILDREN_GROUP_DISCOUNT_RATE));
+            return new TicketTypeSummary(existing.quantity(), existing.totalCost().multiply(childrenGroupDiscountRate));
         }
         return existing;
     }

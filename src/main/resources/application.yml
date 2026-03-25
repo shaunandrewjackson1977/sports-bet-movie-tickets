@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: movietickets
+
+movietickets:
+  pricing:
+    children-group-discount-threshold: 3
+    children-group-discount-rate: 0.75
+    age-ranges:
+      - min: 1
+        max: 10
+        ticket-type: CHILDREN
+      - min: 11
+        max: 17
+        ticket-type: TEEN
+      - min: 18
+        max: 64
+        ticket-type: ADULT
+      - min: 65
+        max: 100
+        ticket-type: SENIOR
+    ticket-prices:
+      CHILDREN:
+        amount: 5
+        currency: AUD
+      TEEN:
+        amount: 12
+        currency: AUD
+      ADULT:
+        amount: 25
+        currency: AUD
+      SENIOR:
+        amount: 17.50
+        currency: AUD
