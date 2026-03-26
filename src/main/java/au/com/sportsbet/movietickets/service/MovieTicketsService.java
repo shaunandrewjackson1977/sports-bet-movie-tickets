@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.money.MonetaryAmount;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +30,7 @@ public class MovieTicketsService {
         var pricing = props.pricing();
         this.childrenGroupDiscountThreshold = pricing.childrenGroupDiscountThreshold();
         this.childrenGroupDiscountRate = pricing.childrenGroupDiscountRate();
-        this.ticketTypes = new LinkedHashMap<>();
+        this.ticketTypes = new HashMap<>();
         pricing.ageRanges().forEach(r -> ticketTypes.put(new Range(r.min(), r.max()), r.ticketType()));
         this.ticketPrices = pricing.ticketPrices().entrySet().stream()
                 .collect(Collectors.toMap(
