@@ -265,7 +265,7 @@ flowchart TD
 
 **Externalized pricing configuration** — ticket prices, age band boundaries, and discount rules are defined in `application.yml` and bound to `MovieTicketsProperties` via `@ConfigurationProperties`. This means pricing can be adjusted per environment or jurisdiction without any code changes.
 
-**Age banding via `Range`** — ticket type resolution is driven by a `LinkedHashMap<Range, TicketType>` built from the configured age ranges and iterated in insertion order. Each `Range` record encapsulates an inclusive min/max check. Adding a new age band or changing boundaries requires only a configuration change.
+**Age banding via `Range`** — ticket type resolution is driven by a `HashMap<Range, TicketType>` built from the configured age ranges. Each `Range` record encapsulates an inclusive min/max check, and since the configured ranges are non-overlapping, the first matching entry is returned. Adding a new age band or changing boundaries requires only a configuration change.
 
 **Centralised error handling** — `GlobalExceptionHandler` extends Spring's `ResponseEntityExceptionHandler` and returns [RFC 7807 Problem Details](https://www.rfc-editor.org/rfc/rfc7807) responses. Validation errors surface field-level messages in the response body; all other exceptions return a generic 500 without leaking internal details.
 
